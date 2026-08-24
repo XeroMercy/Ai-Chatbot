@@ -6,7 +6,10 @@
 .chat-app {
   position: relative;
   isolation: isolate;
-  min-height: 100svh;
+
+  height: 100svh;
+  min-height: 0;
+
   display: flex;
   overflow: hidden;
 
@@ -34,6 +37,7 @@
 }
 
 /* Underwater light */
+
 .chat-app::before,
 .chat-app::after {
   position: absolute;
@@ -72,6 +76,7 @@
 }
 
 /* Sandy ocean floor */
+
 .chat-app::after {
   right: -10%;
   bottom: -12%;
@@ -112,10 +117,18 @@
   z-index: 2;
 
   width: min(720px, 100%);
-  margin: auto;
+  height: 100%;
+  min-height: 0;
+
+  margin: 0 auto;
   padding: 48px 24px;
 
   box-sizing: border-box;
+
+  display: flex;
+  flex-direction: column;
+
+  overflow: hidden;
 }
 
 /* Status indicator */
@@ -124,6 +137,8 @@
   display: flex;
   align-items: flex-start;
   gap: 12px;
+
+  flex-shrink: 0;
 }
 
 .status-dot {
@@ -142,7 +157,9 @@
 /* Messages */
 
 .messages {
-  min-height: 180px;
+  flex: 1 1 auto;
+
+  min-height: 0;
 
   display: flex;
   flex-direction: column;
@@ -150,7 +167,12 @@
 
   gap: 12px;
 
-  padding-bottom: 28px;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  padding: 20px 4px 28px;
+
+  scrollbar-width: thin;
 }
 
 .empty-message,
@@ -184,6 +206,8 @@
     0 1px rgba(255, 255, 255, 0.35);
 
   text-align: left;
+
+  flex-shrink: 0;
 }
 
 .user-bubble {
@@ -284,6 +308,8 @@
   justify-content: center;
 
   width: 100%;
+
+  flex: 0 0 auto;
 }
 
 .question-form {
@@ -393,8 +419,12 @@ textarea:focus-visible {
 
   border: 0;
 }
+
+/* Question arc */
+
 .question-arc {
   position: absolute;
+
   top: -55px;
   left: -60px;
 
@@ -420,6 +450,7 @@ textarea:focus-visible {
 .question-arc path {
   stroke: transparent;
 }
+
 /* =========================
    TREASURE CHEST
    ========================= */
@@ -435,6 +466,8 @@ textarea:focus-visible {
   perspective: 600px;
 
   z-index: 3;
+
+  flex-shrink: 0;
 }
 
 /* Chest body */
@@ -489,10 +522,6 @@ textarea:focus-visible {
       #062b3a 100%
     );
 
-  /*
-    The bottom of the lid acts
-    as the hinge.
-  */
   transform-origin: center bottom;
 
   transform: rotateX(0deg);
@@ -552,12 +581,7 @@ textarea:focus-visible {
   z-index: 1;
 }
 
-
-
-/*
-   The chest opens when:
-   isLoading === true
-*/
+/* Chest opens when isLoading === true */
 
 .treasure-chest.thinking .chest-lid {
   transform: rotateX(-110deg);
@@ -662,12 +686,13 @@ textarea:focus-visible {
     padding: 32px 16px;
   }
 
-  .messages {
-    min-height: 140px;
-  }
-
   .question-form {
     width: 100%;
+  }
+
+  .user-bubble,
+  .assistant-bubble {
+    max-width: 90%;
   }
 }
 
