@@ -1,121 +1,85 @@
 import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from './assets/vite.svg'
-import heroImg from './assets/hero.png'
+import { sendChatMessage } from './api'
 import './App.css'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [question, setQuestion] = useState('')
+  const [messages, setMessages] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [error, setError] = useState('')
+
+  async function handleSubmit(event) {
+    event.preventDefault()
+    const trimmedQuestion = question.trim()
+
+    if (!trimmedQuestion || isLoading) return
+
+    const userMessage = { id: Date.now(), role: 'user', text: trimmedQuestion }
+    const nextMessages = [...messages, userMessage]
+    setMessages(nextMessages)
+    setQuestion('')
+    setError('')
+    setIsLoading(true)
+
+    try {
+      const reply = await sendChatMessage(nextMessages)
+      setMessages((currentMessages) => [
+        ...currentMessages,
+        { id: Date.now() + 1, role: 'assistant', text: reply },
+      ])
+    } catch (requestError) {
+      setError(requestError.message)
+    } finally {
+      setIsLoading(false)
+    }
+  }
 
   return (
-    <>
-      <section id="center">
-        <div className="hero">
-          <img src={heroImg} className="base" width="170" height="179" alt="" />
-          <img src={reactLogo} className="framework" alt="React logo" />
-          <img src={viteLogo} className="vite" alt="Vite logo" />
+    <main className="chat-app">
+      <section id="center" className="chat-panel">
+        <div className="chat-heading">
+          <span className="status-dot" aria-hidden="true"></span>
+          <div>
+            <p className="eyebrow">AI assistant</p>
+            <h1>What can I help you with?</h1>
+          </div>
         </div>
-        <div>
-          <h1>Get started</h1>
-          <p>
-            Edit <code>src/App.jsx</code> and save to test <code>HMR</code>
-          </p>
+
+        <div className="messages" aria-live="polite">
+          {messages.length === 0 ? (
+            <p className="empty-message">Ask a question to start the conversation.</p>
+          ) : (
+            messages.map((message) => (
+              <div className={`${message.role}-bubble`} key={message.id}>
+                {message.text}
+              </div>
+            ))
+          )}
+          {isLoading && <p className="loading-message">Thinking...</p>}
+          {error && <p className="error-message" role="alert">{error}</p>}
         </div>
-        <button
-          type="button"
-          className="counter"
-          onClick={() => setCount((count) => count + 1)}
-        >
-          Count is {count}
-        </button>
+
+        <form className="question-form" onSubmit={handleSubmit}>
+          <label className="sr-only" htmlFor="question">
+            Your question
+          </label>
+          <textarea
+            id="question"
+            value={question}
+            onChange={(event) => setQuestion(event.target.value)}
+            placeholder="Type your question..."
+            rows="1"
+          />
+          <button
+            type="submit"
+            aria-label="Send question"
+            disabled={!question.trim() || isLoading}
+          >
+            <span aria-hidden="true">&#8593;</span>
+          </button>
+        </form>
       </section>
-
-      <div className="ticks"></div>
-
-      <section id="next-steps">
-        <div id="docs">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#documentation-icon"></use>
-          </svg>
-          <h2>Documentation</h2>
-          <p>Your questions, answered</p>
-          <ul>
-            <li>
-              <a href="https://vite.dev/" target="_blank">
-                <img className="logo" src={viteLogo} alt="" />
-                Explore Vite
-              </a>
-            </li>
-            <li>
-              <a href="https://react.dev/" target="_blank">
-                <img className="button-icon" src={reactLogo} alt="" />
-                Learn more
-              </a>
-            </li>
-          </ul>
-        </div>
-        <div id="social">
-          <svg className="icon" role="presentation" aria-hidden="true">
-            <use href="/icons.svg#social-icon"></use>
-          </svg>
-          <h2>Connect with us</h2>
-          <p>Join the Vite community</p>
-          <ul>
-            <li>
-              <a href="https://github.com/vitejs/vite" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#github-icon"></use>
-                </svg>
-                GitHub
-              </a>
-            </li>
-            <li>
-              <a href="https://chat.vite.dev/" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#discord-icon"></use>
-                </svg>
-                Discord
-              </a>
-            </li>
-            <li>
-              <a href="https://x.com/vite_js" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#x-icon"></use>
-                </svg>
-                X.com
-              </a>
-            </li>
-            <li>
-              <a href="https://bsky.app/profile/vite.dev" target="_blank">
-                <svg
-                  className="button-icon"
-                  role="presentation"
-                  aria-hidden="true"
-                >
-                  <use href="/icons.svg#bluesky-icon"></use>
-                </svg>
-                Bluesky
-              </a>
-            </li>
-          </ul>
-        </div>
-      </section>
-
-      <div className="ticks"></div>
-      <section id="spacer"></section>
-    </>
+    </main>
   )
 }
 
