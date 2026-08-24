@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { sendChatMessage } from './api'
-import TreasureChest from './TreasureChest/TreasureChest'
+import TreasureChest from './treasurechest/TreasureChest'
 import './App.css'
 
 function App() {
