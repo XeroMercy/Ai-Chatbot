@@ -15,8 +15,14 @@ function App() {
 
     if (!trimmedQuestion || isLoading) return
 
-    const userMessage = { id: Date.now(), role: 'user', text: trimmedQuestion }
+    const userMessage = {
+      id: Date.now(),
+      role: 'user',
+      text: trimmedQuestion,
+    }
+
     const nextMessages = [...messages, userMessage]
+
     setMessages(nextMessages)
     setQuestion('')
     setError('')
@@ -24,9 +30,14 @@ function App() {
 
     try {
       const reply = await sendChatMessage(nextMessages)
+
       setMessages((currentMessages) => [
         ...currentMessages,
-        { id: Date.now() + 1, role: 'assistant', text: reply },
+        {
+          id: Date.now() + 1,
+          role: 'assistant',
+          text: reply,
+        },
       ])
     } catch (requestError) {
       setError(requestError.message)
@@ -46,25 +57,45 @@ function App() {
         <span className="water-bubble bubble-f"></span>
         <span className="water-bubble bubble-g"></span>
       </div>
+
       <section id="center" className="chat-panel">
         <div className="chat-heading">
           <span className="status-dot" aria-hidden="true"></span>
+
           <div>
             <p className="eyebrow"></p>
           </div>
         </div>
+
         <TreasureChest isThinking={isLoading} />
 
         <div className="messages" aria-live="polite">
-          {messages.length > 0 && (
+          {messages.length > 0 &&
             messages.map((message) => (
-              <div className={`${message.role}-bubble`} key={message.id}>
+              <div
+                className={`${message.role}-bubble`}
+                key={message.id}
+              >
                 {message.text}
               </div>
-            ))
+            ))}
+
+          {isLoading && (
+            <div
+              className="loading-message thinking-bubbles"
+              aria-label="Thinking"
+            >
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
           )}
-          {isLoading && <p className="loading-message">Thinking...</p>}
-          {error && <p className="error-message" role="alert">{error}</p>}
+
+          {error && (
+            <p className="error-message" role="alert">
+              {error}
+            </p>
+          )}
         </div>
 
         <div className="input-area">
@@ -72,6 +103,7 @@ function App() {
             <label className="sr-only" htmlFor="question">
               Your question
             </label>
+
             <textarea
               id="question"
               value={question}
@@ -79,6 +111,7 @@ function App() {
               placeholder="Type your question..."
               rows="1"
             />
+
             <button
               type="submit"
               aria-label="Send question"
