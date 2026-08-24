@@ -9,13 +9,31 @@
   min-height: 100svh;
   display: flex;
   overflow: hidden;
+
   background:
-    linear-gradient(180deg, rgba(193, 247, 255, 0.64) 0 2%, transparent 2.5%),
-    radial-gradient(ellipse at 50% -18%, #c7f7ff 0%, #62c7df 24%, transparent 48%),
-    linear-gradient(180deg, #3fb8d5 0%, #167da9 38%, #084f72 72%, #032f4b 100%);
+    linear-gradient(
+      180deg,
+      rgba(193, 247, 255, 0.64) 0 2%,
+      transparent 2.5%
+    ),
+    radial-gradient(
+      ellipse at 50% -18%,
+      #c7f7ff 0%,
+      #62c7df 24%,
+      transparent 48%
+    ),
+    linear-gradient(
+      180deg,
+      #3fb8d5 0%,
+      #167da9 38%,
+      #084f72 72%,
+      #032f4b 100%
+    );
+
   box-shadow: inset 0 0 90px rgba(1, 30, 51, 0.42);
 }
 
+/* Underwater light */
 .chat-app::before,
 .chat-app::after {
   position: absolute;
@@ -26,38 +44,81 @@
 .chat-app::before {
   inset: -35% -15% 16%;
   opacity: 0.5;
+
   background:
-    radial-gradient(ellipse at 18% 16%, rgba(255, 255, 255, 0.56) 0 1.5%, transparent 2%),
-    radial-gradient(ellipse at 74% 42%, rgba(255, 255, 255, 0.36) 0 1%, transparent 1.5%),
-    repeating-linear-gradient(103deg, transparent 0 9%, rgba(255, 255, 255, 0.14) 10% 12%, transparent 13% 22%);
-  background-size: 240px 240px, 330px 330px, 100% 100%;
+    radial-gradient(
+      ellipse at 18% 16%,
+      rgba(255, 255, 255, 0.56) 0 1.5%,
+      transparent 2%
+    ),
+    radial-gradient(
+      ellipse at 74% 42%,
+      rgba(255, 255, 255, 0.36) 0 1%,
+      transparent 1.5%
+    ),
+    repeating-linear-gradient(
+      103deg,
+      transparent 0 9%,
+      rgba(255, 255, 255, 0.14) 10% 12%,
+      transparent 13% 22%
+    );
+
+  background-size:
+    240px 240px,
+    330px 330px,
+    100% 100%;
+
   animation: water-shimmer 12s ease-in-out infinite alternate;
 }
 
+/* Sandy ocean floor */
 .chat-app::after {
   right: -10%;
   bottom: -12%;
   left: -10%;
   height: 35%;
+
   border-radius: 50% 50% 0 0 / 22% 22% 0 0;
+
   background:
-    repeating-radial-gradient(ellipse at 50% 8%, transparent 0 16px, rgba(124, 79, 29, 0.28) 17px 19px, transparent 20px 34px),
-    linear-gradient(180deg, #e9c77c 0%, #c89d52 100%);
-  background-size: 100% 100%, 100% 100%;
+    repeating-radial-gradient(
+      ellipse at 50% 8%,
+      transparent 0 16px,
+      rgba(124, 79, 29, 0.28) 17px 19px,
+      transparent 20px 34px
+    ),
+    linear-gradient(
+      180deg,
+      #e9c77c 0%,
+      #c89d52 100%
+    );
+
   box-shadow: 0 -14px 28px rgba(4, 59, 77, 0.22);
-  transform: perspective(520px) rotateX(48deg) scale(1.18);
+
+  transform:
+    perspective(520px)
+    rotateX(48deg)
+    scale(1.18);
+
   transform-origin: center bottom;
+
   animation: sand-drift 16s ease-in-out infinite alternate;
 }
+
+/* Main chat area */
 
 .chat-panel {
   position: relative;
   z-index: 2;
+
   width: min(720px, 100%);
   margin: auto;
   padding: 48px 24px;
+
   box-sizing: border-box;
 }
+
+/* Status indicator */
 
 .chat-heading {
   display: flex;
@@ -69,35 +130,26 @@
   width: 8px;
   height: 8px;
   margin-top: 12px;
+
   border-radius: 50%;
+
   background: #000;
-  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.35);
+
+  box-shadow:
+    0 0 0 5px rgba(255, 255, 255, 0.35);
 }
 
-.eyebrow {
-  margin: 0;
-  color: #000;
-  text-shadow: 0 1px rgba(255, 255, 255, 0.45);
-  font-size: 12px;
-  font-weight: 700;
-  letter-spacing: 1px;
-  text-transform: uppercase;
-}
-
-h1 {
-  margin: 4px 0 32px;
-  color: #000;
-  font-size: clamp(32px, 6vw, 52px);
-  line-height: 1;
-  text-shadow: 0 1px rgba(255, 255, 255, 0.5);
-}
+/* Messages */
 
 .messages {
   min-height: 180px;
+
   display: flex;
   flex-direction: column;
   align-items: flex-end;
+
   gap: 12px;
+
   padding-bottom: 28px;
 }
 
@@ -105,19 +157,32 @@ h1 {
 .loading-message,
 .error-message {
   align-self: flex-start;
+
   color: #000;
+
   font-size: 14px;
-  text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+
+  text-shadow:
+    0 1px rgba(255, 255, 255, 0.5);
 }
+
+/* Chat bubbles */
 
 .user-bubble,
 .assistant-bubble {
   max-width: 80%;
+
   padding: 12px 16px;
+
   border: 1px solid #000;
+
   color: #000;
+
   background: rgba(255, 255, 255, 0.2);
-  box-shadow: 0 1px rgba(255, 255, 255, 0.35);
+
+  box-shadow:
+    0 1px rgba(255, 255, 255, 0.35);
+
   text-align: left;
 }
 
@@ -127,67 +192,143 @@ h1 {
 
 .assistant-bubble {
   align-self: flex-start;
+
   border-radius: 16px 16px 16px 4px;
 }
 
+/* Floating underwater bubbles */
+
 .bubble-field {
   position: absolute;
+
   z-index: 1;
+
   inset: 0;
+
   overflow: hidden;
+
   pointer-events: none;
 }
 
 .water-bubble {
   position: absolute;
+
   bottom: -24px;
+
   width: 12px;
   height: 12px;
+
   border: 2px solid rgba(226, 250, 255, 0.75);
+
   border-radius: 50%;
+
   opacity: 0;
-  animation: bubble-float 9s linear infinite;
+
+  animation:
+    bubble-float 9s linear infinite;
 }
 
-.bubble-a { left: 8%; animation-delay: 0s; }
-.bubble-b { left: 23%; width: 8px; height: 8px; animation-delay: 3.4s; }
-.bubble-c { left: 39%; width: 16px; height: 16px; animation-delay: 6s; }
-.bubble-d { left: 56%; width: 7px; height: 7px; animation-delay: 1.8s; }
-.bubble-e { left: 68%; width: 11px; height: 11px; animation-delay: 4.8s; }
-.bubble-f { left: 81%; width: 17px; height: 17px; animation-delay: 7.2s; }
-.bubble-g { left: 93%; width: 8px; height: 8px; animation-delay: 2.4s; }
+.bubble-a {
+  left: 8%;
+  animation-delay: 0s;
+}
+
+.bubble-b {
+  left: 23%;
+  width: 8px;
+  height: 8px;
+  animation-delay: 3.4s;
+}
+
+.bubble-c {
+  left: 39%;
+  width: 16px;
+  height: 16px;
+  animation-delay: 6s;
+}
+
+.bubble-d {
+  left: 56%;
+  width: 7px;
+  height: 7px;
+  animation-delay: 1.8s;
+}
+
+.bubble-e {
+  left: 68%;
+  width: 11px;
+  height: 11px;
+  animation-delay: 4.8s;
+}
+
+.bubble-f {
+  left: 81%;
+  width: 17px;
+  height: 17px;
+  animation-delay: 7.2s;
+}
+
+.bubble-g {
+  left: 93%;
+  width: 8px;
+  height: 8px;
+  animation-delay: 2.4s;
+}
+
+/* Input */
 
 .input-area {
   position: relative;
+
   display: flex;
   justify-content: center;
+
   width: 100%;
 }
 
 .question-form {
   display: flex;
+
   width: 50%;
+
   align-self: center;
   align-items: flex-end;
+
   gap: 6px;
+
   padding: 5px 6px 5px 10px;
+
   border: 1px solid rgba(255, 255, 255, 0.7);
+
   border-radius: 999px;
+
   background: rgba(255, 255, 255, 0.17);
-  box-shadow: 0 8px 22px rgba(0, 32, 52, 0.24), inset 0 1px rgba(255, 255, 255, 0.6);
+
+  box-shadow:
+    0 8px 22px rgba(0, 32, 52, 0.24),
+    inset 0 1px rgba(255, 255, 255, 0.6);
+
   backdrop-filter: blur(10px);
 }
 
 textarea {
   width: 100%;
+
   min-height: 20px;
   max-height: 60px;
+
   resize: vertical;
+
   border: 0;
   outline: 0;
+
   color: #000;
+
   background: transparent;
-  text-shadow: 0 1px rgba(255, 255, 255, 0.5);
+
+  text-shadow:
+    0 1px rgba(255, 255, 255, 0.5);
+
   font: inherit;
 }
 
@@ -196,22 +337,34 @@ textarea::placeholder {
   opacity: 0.72;
 }
 
+/* Send button */
+
 .question-form button {
   flex: 0 0 28px;
+
   width: 28px;
   height: 28px;
+
   border: 1px solid rgba(255, 255, 255, 0.7);
+
   border-radius: 50%;
+
   color: #fff;
+
   background: #000;
+
   cursor: pointer;
+
   font-size: 16px;
+
   line-height: 1;
 }
 
 .question-form button:disabled {
   color: #666;
+
   background: transparent;
+
   cursor: not-allowed;
 }
 
@@ -221,17 +374,288 @@ textarea:focus-visible {
   outline-offset: 3px;
 }
 
+/* Accessibility */
+
 .sr-only {
   position: absolute;
+
   width: 1px;
   height: 1px;
+
   padding: 0;
   margin: -1px;
+
   overflow: hidden;
+
   clip: rect(0, 0, 0, 0);
+
   white-space: nowrap;
+
   border: 0;
 }
+.question-arc {
+  position: absolute;
+  top: -55px;
+  left: -60px;
+
+  width: 240px;
+  height: 70px;
+
+  overflow: visible;
+
+  color: #000;
+
+  font-size: 16px;
+  font-weight: 700;
+
+  letter-spacing: 1px;
+  text-transform: uppercase;
+
+  text-shadow:
+    0 1px rgba(255, 255, 255, 0.65);
+
+  pointer-events: none;
+}
+
+.question-arc path {
+  stroke: transparent;
+}
+/* =========================
+   TREASURE CHEST
+   ========================= */
+
+.treasure-chest {
+  width: 120px;
+  height: 110px;
+
+  margin: 20px auto 30px;
+
+  position: relative;
+
+  perspective: 600px;
+
+  z-index: 3;
+}
+
+/* Chest body */
+
+.chest-base {
+  position: absolute;
+
+  bottom: 5px;
+  left: 10px;
+
+  width: 100px;
+  height: 65px;
+
+  border: 4px solid #1677a8;
+
+  border-radius: 4px 4px 10px 10px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #0b526e,
+      #062b3a
+    );
+
+  box-shadow:
+    0 0 15px rgba(53, 217, 255, 0.2),
+    inset 0 8px 12px rgba(0, 0, 0, 0.2);
+
+  z-index: 2;
+}
+
+/* Chest lid */
+
+.chest-lid {
+  position: absolute;
+
+  left: 10px;
+  top: 10px;
+
+  width: 100px;
+  height: 42px;
+
+  border: 4px solid #1677a8;
+
+  border-radius:
+    50px 50px 5px 5px;
+
+  background:
+    linear-gradient(
+      180deg,
+      #0b526e 0%,
+      #062b3a 100%
+    );
+
+  /*
+    The bottom of the lid acts
+    as the hinge.
+  */
+  transform-origin: center bottom;
+
+  transform: rotateX(0deg);
+
+  transition:
+    transform 0.7s
+    cubic-bezier(0.25, 0.8, 0.25, 1);
+
+  z-index: 4;
+}
+
+/* Lock */
+
+.chest-lock {
+  position: absolute;
+
+  left: 42px;
+  bottom: -9px;
+
+  width: 16px;
+  height: 20px;
+
+  border-radius: 3px;
+
+  background: #35d9ff;
+
+  box-shadow:
+    0 0 8px rgba(53, 217, 255, 0.7);
+
+  z-index: 5;
+}
+
+/* Light inside the chest */
+
+.chest-glow {
+  position: absolute;
+
+  left: 14px;
+  bottom: 10px;
+
+  width: 92px;
+  height: 50px;
+
+  border-radius: 8px;
+
+  background: #35d9ff;
+
+  opacity: 0;
+
+  box-shadow:
+    0 0 20px #35d9ff,
+    0 0 40px rgba(53, 217, 255, 0.8);
+
+  transition:
+    opacity 0.5s ease;
+
+  z-index: 1;
+}
+
+
+
+/*
+   The chest opens when:
+   isLoading === true
+*/
+
+.treasure-chest.thinking .chest-lid {
+  transform: rotateX(-110deg);
+}
+
+.treasure-chest.thinking .chest-glow {
+  opacity: 0.35;
+}
+
+.treasure-chest.thinking {
+  animation:
+    chest-float 1.5s ease-in-out infinite;
+}
+
+/* Floating chest */
+
+@keyframes chest-float {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(-5px);
+  }
+}
+
+/* Water movement */
+
+@keyframes water-shimmer {
+  from {
+    transform:
+      translate3d(-2%, -1%, 0)
+      rotate(-1deg)
+      scale(1.02);
+  }
+
+  to {
+    transform:
+      translate3d(2%, 2%, 0)
+      rotate(1deg)
+      scale(1.08);
+  }
+}
+
+/* Sand movement */
+
+@keyframes sand-drift {
+  from {
+    transform:
+      perspective(520px)
+      translateX(-1.5%)
+      rotateX(48deg)
+      rotateZ(-1deg)
+      scale(1.18);
+  }
+
+  to {
+    transform:
+      perspective(520px)
+      translateX(1.5%)
+      rotateX(48deg)
+      rotateZ(1deg)
+      scale(1.22);
+  }
+}
+
+/* Bubble movement */
+
+@keyframes bubble-float {
+  0% {
+    opacity: 0;
+
+    transform:
+      translate(0, 0)
+      scale(0.6);
+  }
+
+  10% {
+    opacity: 0.8;
+  }
+
+  55% {
+    transform:
+      translate(18px, -48vh)
+      scale(1);
+  }
+
+  100% {
+    opacity: 0;
+
+    transform:
+      translate(-12px, -112vh)
+      scale(1.2);
+  }
+}
+
+/* Mobile */
 
 @media (max-width: 600px) {
   .chat-panel {
@@ -247,50 +671,20 @@ textarea:focus-visible {
   }
 }
 
-@keyframes water-shimmer {
-  from {
-    transform: translate3d(-2%, -1%, 0) rotate(-1deg) scale(1.02);
-  }
-
-  to {
-    transform: translate3d(2%, 2%, 0) rotate(1deg) scale(1.08);
-  }
-}
-
-@keyframes sand-drift {
-  from {
-    transform: perspective(520px) translateX(-1.5%) rotateX(48deg) rotateZ(-1deg) scale(1.18);
-  }
-
-  to {
-    transform: perspective(520px) translateX(1.5%) rotateX(48deg) rotateZ(1deg) scale(1.22);
-  }
-}
-
-@keyframes bubble-float {
-  0% {
-    opacity: 0;
-    transform: translate(0, 0) scale(0.6);
-  }
-
-  10% {
-    opacity: 0.8;
-  }
-
-  55% {
-    transform: translate(18px, -48vh) scale(1);
-  }
-
-  100% {
-    opacity: 0;
-    transform: translate(-12px, -112vh) scale(1.2);
-  }
-}
+/* Reduced motion */
 
 @media (prefers-reduced-motion: reduce) {
   .chat-app::before,
   .chat-app::after,
   .water-bubble {
     animation: none;
+  }
+
+  .treasure-chest.thinking {
+    animation: none;
+  }
+
+  .chest-lid {
+    transition: none;
   }
 }

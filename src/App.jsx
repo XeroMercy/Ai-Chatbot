@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { sendChatMessage } from './api'
+import TreasureChest from './TreasureChest/TreasureChest'
 import './App.css'
 
 function App() {
@@ -49,14 +50,13 @@ function App() {
         <div className="chat-heading">
           <span className="status-dot" aria-hidden="true"></span>
           <div>
-            <p className="eyebrow">Deep Sea Thoughts</p>
+            <p className="eyebrow"></p>
           </div>
         </div>
+        <TreasureChest isThinking={isLoading} />
 
         <div className="messages" aria-live="polite">
-          {messages.length === 0 ? (
-            <p className="empty-message">Ask a question to start the conversation.</p>
-          ) : (
+          {messages.length > 0 && (
             messages.map((message) => (
               <div className={`${message.role}-bubble`} key={message.id}>
                 {message.text}
