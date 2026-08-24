@@ -4,12 +4,55 @@
 }
 
 .chat-app {
+  position: relative;
+  isolation: isolate;
   min-height: 100svh;
   display: flex;
-  background: #fff;
+  overflow: hidden;
+  background:
+    linear-gradient(180deg, rgba(193, 247, 255, 0.64) 0 2%, transparent 2.5%),
+    radial-gradient(ellipse at 50% -18%, #c7f7ff 0%, #62c7df 24%, transparent 48%),
+    linear-gradient(180deg, #3fb8d5 0%, #167da9 38%, #084f72 72%, #032f4b 100%);
+  box-shadow: inset 0 0 90px rgba(1, 30, 51, 0.42);
+}
+
+.chat-app::before,
+.chat-app::after {
+  position: absolute;
+  z-index: -1;
+  content: '';
+}
+
+.chat-app::before {
+  inset: -35% -15% 16%;
+  opacity: 0.5;
+  background:
+    radial-gradient(ellipse at 18% 16%, rgba(255, 255, 255, 0.56) 0 1.5%, transparent 2%),
+    radial-gradient(ellipse at 74% 42%, rgba(255, 255, 255, 0.36) 0 1%, transparent 1.5%),
+    repeating-linear-gradient(103deg, transparent 0 9%, rgba(255, 255, 255, 0.14) 10% 12%, transparent 13% 22%);
+  background-size: 240px 240px, 330px 330px, 100% 100%;
+  animation: water-shimmer 12s ease-in-out infinite alternate;
+}
+
+.chat-app::after {
+  right: -10%;
+  bottom: -12%;
+  left: -10%;
+  height: 35%;
+  border-radius: 50% 50% 0 0 / 22% 22% 0 0;
+  background:
+    repeating-radial-gradient(ellipse at 50% 8%, transparent 0 16px, rgba(124, 79, 29, 0.28) 17px 19px, transparent 20px 34px),
+    linear-gradient(180deg, #e9c77c 0%, #c89d52 100%);
+  background-size: 100% 100%, 100% 100%;
+  box-shadow: 0 -14px 28px rgba(4, 59, 77, 0.22);
+  transform: perspective(520px) rotateX(48deg) scale(1.18);
+  transform-origin: center bottom;
+  animation: sand-drift 16s ease-in-out infinite alternate;
 }
 
 .chat-panel {
+  position: relative;
+  z-index: 2;
   width: min(720px, 100%);
   margin: auto;
   padding: 48px 24px;
@@ -28,11 +71,13 @@
   margin-top: 12px;
   border-radius: 50%;
   background: #000;
+  box-shadow: 0 0 0 5px rgba(255, 255, 255, 0.35);
 }
 
 .eyebrow {
   margin: 0;
   color: #000;
+  text-shadow: 0 1px rgba(255, 255, 255, 0.45);
   font-size: 12px;
   font-weight: 700;
   letter-spacing: 1px;
@@ -44,6 +89,7 @@ h1 {
   color: #000;
   font-size: clamp(32px, 6vw, 52px);
   line-height: 1;
+  text-shadow: 0 1px rgba(255, 255, 255, 0.5);
 }
 
 .messages {
@@ -61,6 +107,7 @@ h1 {
   align-self: flex-start;
   color: #000;
   font-size: 14px;
+  text-shadow: 0 1px rgba(255, 255, 255, 0.5);
 }
 
 .user-bubble,
@@ -69,7 +116,8 @@ h1 {
   padding: 12px 16px;
   border: 1px solid #000;
   color: #000;
-  background: #fff;
+  background: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 1px rgba(255, 255, 255, 0.35);
   text-align: left;
 }
 
@@ -82,48 +130,88 @@ h1 {
   border-radius: 16px 16px 16px 4px;
 }
 
+.bubble-field {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.water-bubble {
+  position: absolute;
+  bottom: -24px;
+  width: 12px;
+  height: 12px;
+  border: 2px solid rgba(226, 250, 255, 0.75);
+  border-radius: 50%;
+  opacity: 0;
+  animation: bubble-float 9s linear infinite;
+}
+
+.bubble-a { left: 8%; animation-delay: 0s; }
+.bubble-b { left: 23%; width: 8px; height: 8px; animation-delay: 3.4s; }
+.bubble-c { left: 39%; width: 16px; height: 16px; animation-delay: 6s; }
+.bubble-d { left: 56%; width: 7px; height: 7px; animation-delay: 1.8s; }
+.bubble-e { left: 68%; width: 11px; height: 11px; animation-delay: 4.8s; }
+.bubble-f { left: 81%; width: 17px; height: 17px; animation-delay: 7.2s; }
+.bubble-g { left: 93%; width: 8px; height: 8px; animation-delay: 2.4s; }
+
+.input-area {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  width: 100%;
+}
+
 .question-form {
   display: flex;
+  width: 50%;
+  align-self: center;
   align-items: flex-end;
-  gap: 10px;
-  padding: 8px 8px 8px 16px;
-  border: 1px solid #000;
-  border-radius: 4px;
-  background: #fff;
+  gap: 6px;
+  padding: 5px 6px 5px 10px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.17);
+  box-shadow: 0 8px 22px rgba(0, 32, 52, 0.24), inset 0 1px rgba(255, 255, 255, 0.6);
+  backdrop-filter: blur(10px);
 }
 
 textarea {
   width: 100%;
-  min-height: 28px;
-  max-height: 120px;
+  min-height: 20px;
+  max-height: 60px;
   resize: vertical;
   border: 0;
   outline: 0;
   color: #000;
-  background: #fff;
+  background: transparent;
+  text-shadow: 0 1px rgba(255, 255, 255, 0.5);
   font: inherit;
 }
 
 textarea::placeholder {
-  color: #666;
+  color: #000;
+  opacity: 0.72;
 }
 
 .question-form button {
-  flex: 0 0 36px;
-  width: 36px;
-  height: 36px;
-  border: 1px solid #000;
-  border-radius: 4px;
+  flex: 0 0 28px;
+  width: 28px;
+  height: 28px;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  border-radius: 50%;
   color: #fff;
   background: #000;
   cursor: pointer;
-  font-size: 20px;
+  font-size: 16px;
   line-height: 1;
 }
 
 .question-form button:disabled {
   color: #666;
-  background: #fff;
+  background: transparent;
   cursor: not-allowed;
 }
 
@@ -152,5 +240,57 @@ textarea:focus-visible {
 
   .messages {
     min-height: 140px;
+  }
+
+  .question-form {
+    width: 100%;
+  }
+}
+
+@keyframes water-shimmer {
+  from {
+    transform: translate3d(-2%, -1%, 0) rotate(-1deg) scale(1.02);
+  }
+
+  to {
+    transform: translate3d(2%, 2%, 0) rotate(1deg) scale(1.08);
+  }
+}
+
+@keyframes sand-drift {
+  from {
+    transform: perspective(520px) translateX(-1.5%) rotateX(48deg) rotateZ(-1deg) scale(1.18);
+  }
+
+  to {
+    transform: perspective(520px) translateX(1.5%) rotateX(48deg) rotateZ(1deg) scale(1.22);
+  }
+}
+
+@keyframes bubble-float {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.6);
+  }
+
+  10% {
+    opacity: 0.8;
+  }
+
+  55% {
+    transform: translate(18px, -48vh) scale(1);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(-12px, -112vh) scale(1.2);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .chat-app::before,
+  .chat-app::after,
+  .water-bubble {
+    animation: none;
   }
 }
